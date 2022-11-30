@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper的命名空间 必须和某个DAO的接口文件路径一致（包名.接口）-->
+<mapper namespace="com.my.store.mapper.UserMapper">
+
+    <!-- resultMap：当表的字段名称和对象属性名称不一致时，自定义查询结果集的映射规则 -->
+    <!-- type：取值为一个类，表示 数据库中的查询结果与哪个实体类进行结果集的映射 -->
+    <!-- 将表的字段名称和类的属性名称不一致的进行匹配指定，一致的可以省略不写
+         在定义映射规则时，主键不可以省略
+        <resultMap id="UserEntityMap" type="com.my.store.entity.User">
+            <id column="uid" property="uid">/id>
+            <result column="" property=""></result>
+        </resultMap>
+    -->
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+        insert into t_user (username, password, salt, phone, email, gender, avatar, is_delete,
+                            created_user, created_time, modified_user, modified_time)
+        values (#{username}, #{password}, #{salt}, #{phone}, #{email}, #{gender}, #{avatar}, #{is_delete},
+                #{created_user}, #{created_time}, #{modified_user}, #{modified_time})
+    </insert>
+    <update id="updatePasswordByUid">
+        update t_user
+        set password      = #{password},
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        where uid = #{uid}
+    </update>
+
+    <!-- resultType：表示查询的结果集类型，只需要指定对应映射的类的类型，并且包含完整的包结构 -->
+    <select id="findByName" resultType="com.my.store.entity.User">
+        select *
+        from t_user
+        where username = #{username}
+    </select>
+    <select id="findByUid" resultType="com.my.store.entity.User">
+        select *
+        from t_user
+        where uid = #{uid}
+    </select>
+</mapper>
