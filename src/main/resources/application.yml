@@ -4,6 +4,10 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/store?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
     username: root
     password: mysql123
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
 
 mybatis:
   mapper-locations: /mapper/*.xml

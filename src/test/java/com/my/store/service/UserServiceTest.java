@@ -53,4 +53,23 @@ public class UserServiceTest {
     public void changePassword() {
         userService.changePassword(9, "ly02", "123", "111");
     }
+
+    @Test
+    public void getByUid() {
+        System.out.println(userService.getByUid(5));
+    }
+
+    @Test
+    public void changeInfo() {
+        User user = new User();
+        user.setPhone("13333333333");
+        user.setEmail("ly@qq.com");
+        user.setGender(2);
+        userService.changeInfo(5, "ly01", user);
+    }
+
+    @Test
+    public void changeAvatar() {
+        userService.changeAvatar(1, "/upload/test.png", "admin");
+    }
 }

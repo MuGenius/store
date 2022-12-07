@@ -28,6 +28,25 @@
             modified_time = #{modifiedTime}
         where uid = #{uid}
     </update>
+    <update id="updateInfoByUid">
+        update t_user
+        set
+        /* if表示条件判断标签，test接收的是一个返回值为boolean类型的条件
+        如果test条件的结果为true，则执行if标签内部的语句 */
+        <if test="phone != null">phone = #{phone},</if>
+        <if test="email != null">email = #{email},</if>
+        <if test="email != null">gender = #{gender},</if>
+        modified_user = #{modified_user},
+        modified_time = #{modified_time}
+        where uid = #{uid}
+    </update>
+    <update id="updateAvatarByUid">
+        update t_user
+        set avatar        = #{avatar},
+            modified_user = #{modified_user},
+            modified_time = #{modified_time}
+        where uid = #{uid}
+    </update>
 
     <!-- resultType：表示查询的结果集类型，只需要指定对应映射的类的类型，并且包含完整的包结构 -->
     <select id="findByName" resultType="com.my.store.entity.User">

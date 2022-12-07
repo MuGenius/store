@@ -25,4 +25,30 @@ public interface IUserService {
                         String username,
                         String oldPassword,
                         String newPassword);
+
+    /**
+     * 根据用户uid查询用户数据
+     *
+     * @param uid 用户uid
+     * @return 用户数据
+     */
+    User getByUid(Integer uid);
+
+    /**
+     * 更新用户数据
+     *
+     * @param uid      用户uid
+     * @param username 用户名
+     * @param user     用户对象的数据
+     */
+    void changeInfo(Integer uid, String username, User user);
+
+    /**
+     * 更新用户头像
+     *
+     * @param uid      用户id
+     * @param avatar   用户头像路径
+     * @param username 用户名
+     */
+    void changeAvatar(Integer uid, String avatar, String username);
 }

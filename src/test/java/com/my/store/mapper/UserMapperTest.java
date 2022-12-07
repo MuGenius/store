@@ -51,4 +51,19 @@ public class UserMapperTest {
     public void findByUid() {
         System.out.println(userMapper.findByUid(8));
     }
+
+    @Test
+    public void updateInfoByUid() {
+        User user = new User();
+        user.setUid(5);
+        user.setPhone("15555555555");
+        user.setEmail("ly01@qq.com");
+        user.setGender(1);
+        userMapper.updateInfoByUid(user);
+    }
+
+    @Test
+    public void updateAvatarByUid() {
+        userMapper.updateAvatarByUid(1, "/upload/avatar.png", "my", new Date());
+    }
 }
