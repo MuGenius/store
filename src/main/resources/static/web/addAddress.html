@@ -19,8 +19,8 @@
     <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
     <link rel="stylesheet" type="text/css" href="../css/top.css"/>
     <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
-    <script type="text/javascript" src="../js/distpicker.data.js"></script>
-    <script type="text/javascript" src="../js/distpicker.js"></script>
+    <!--    <script type="text/javascript" src="../js/distpicker.data.js"></script>-->
+    <!--    <script type="text/javascript" src="../js/distpicker.js"></script>-->
 </head>
 
 <body>
@@ -293,6 +293,126 @@
     </div>
 </footer>
 <!--页脚结束-->
+<script type="text/javascript">
+    // value属性表示当前这个区的code值
+    let defaultOption = "<option value='0'> --- 请选择 --- </option>"
+    $(document).ready(function () {
+        showProvinceList();
+        $("#province-list").append(defaultOption);
+        $("#city-list").append(defaultOption);
+        $("#area-list").append(defaultOption);
+    })
+
+    /**
+     * change()函数 -- 用户监听某个空间是否发生改变，一旦发生改变就会被触发。
+     * 需要传递一个function(){}
+     */
+    $("#province-list").change(function () {
+        // 先获取行政区父代码
+        let parent = $("#province-list").val();
+        // 清空select下拉列表中的所有option元素
+        $("#city-list").empty();
+        $("#area-list").empty();
+        // 设置默认值
+        $("#city-list").append(defaultOption);
+        $("#area-list").append(defaultOption);
+
+        if (parent === 0) {
+            return;
+        }
+
+        $.ajax({
+            url: "/districts",
+            type: "GET",
+            data: "parent=" + parent,
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state === 200) {
+                    let list = json.data;
+                    for (let i = 0; i < list.length; i++) {
+                        let opt = "<option value='" + list[i].code + "'>" + list[i].name + "</option>";
+                        $("#city-list").append(opt);
+                    }
+                } else {
+                    alert("城市信息加载失败！");
+                }
+            }
+        });
+    });
+
+    $("#city-list").change(function () {
+        // 先获取行政区父代码
+        let parent = $("#city-list").val();
+        // 清空select下拉列表中的所有option元素
+        $("#area-list").empty();
+        // 设置默认值
+        $("#area-list").append(defaultOption);
+
+        if (parent === 0) {
+            return;
+        }
+
+        $.ajax({
+            url: "/districts",
+            type: "GET",
+            data: "parent=" + parent,
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state === 200) {
+                    let list = json.data;
+                    for (let i = 0; i < list.length; i++) {
+                        let opt = "<option value='" + list[i].code + "'>" + list[i].name + "</option>";
+                        $("#area-list").append(opt);
+                    }
+                } else {
+                    alert("区/县信息加载失败！");
+                }
+            }
+        });
+    });
+
+    /* 省下拉列表数据展示 */
+    function showProvinceList() {
+        $.ajax({
+            url: "/districts",
+            type: "POST",
+            data: "parent=86",
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state === 200) {
+                    let list = json.data;
+                    for (let i = 0; i < list.length; i++) {
+                        let opt = "<option value='" + list[i].code + "'>" + list[i].name + "</option>";
+                        $("#province-list").append(opt);
+                    }
+                } else {
+                    alert("省/直辖市信息加载失败！");
+                }
+            }
+        });
+    }
+
+    //1.监听注册按钮是否被点击
+    $("#btn-add-new-address").click(function () {
+        //2.发送ajax.()的异步请求来完成用户的注册功能
+        $.ajax({
+            url: "/address/add_new_address",
+            type: "POST",
+            data: $("#form-add-new-address").serialize(),
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state === 200) {
+                    alert("新增成功！");
+                } else {
+                    alert("新增失败！");
+                }
+            },
+            error: function (xhr) {
+                alert("新增时产生未知的异常！" + xhr.message);
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

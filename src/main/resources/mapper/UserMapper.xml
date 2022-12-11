@@ -10,16 +10,19 @@
     <!-- 将表的字段名称和类的属性名称不一致的进行匹配指定，一致的可以省略不写
          在定义映射规则时，主键不可以省略
         <resultMap id="UserEntityMap" type="com.my.store.entity.User">
-            <id column="uid" property="uid">/id>
+            <id column="uid" property="uid"></id>
             <result column="" property=""></result>
         </resultMap>
     -->
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
-        insert into t_user (username, password, salt, phone, email, gender, avatar, is_delete,
+        insert into t_user (username, password, salt, phone,
+                            email, gender, avatar, is_delete,
                             created_user, created_time, modified_user, modified_time)
-        values (#{username}, #{password}, #{salt}, #{phone}, #{email}, #{gender}, #{avatar}, #{is_delete},
-                #{created_user}, #{created_time}, #{modified_user}, #{modified_time})
+            value ( #{username}, #{password}, #{salt}, #{phone},
+            #{email}, #{gender}, #{avatar}, #{is_delete},
+            #{created_user}, #{created_time}, #{modified_user}, #{modified_time}
+            )
     </insert>
     <update id="updatePasswordByUid">
         update t_user
