@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper的命名空间 必须和某个DAO的接口文件路径一致（包名.接口）-->
+<mapper namespace="com.my.store.mapper.ProductMapper">
+
+    <resultMap id="ProductEntityMap" type="com.my.store.entity.Product">
+        <id column="id" property="id"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="item_type" property="itemType"/>
+        <result column="sell_point" property="sellPoint"/>
+        <result column="created_user" property="created_user"/>
+        <result column="created_time" property="created_time"/>
+        <result column="modified_user" property="modified_user"/>
+        <result column="modified_time" property="modified_time"/>
+    </resultMap>
+    <select id="findHotList" resultMap="ProductEntityMap">
+        select *
+        from t_product
+        where status = 1
+        order by priority desc limit 0, 4
+    </select>
+    <select id="findProductById" resultMap="ProductEntityMap">
+        select *
+        from t_product
+        where id = #{id}
+    </select>
+
+</mapper>

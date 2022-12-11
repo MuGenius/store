@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper的命名空间 必须和某个DAO的接口文件路径一致（包名.接口）-->
+<mapper namespace="com.my.store.mapper.CartMapper">
+
+    <resultMap id="CartEntityMap" type="com.my.store.entity.Cart">
+        <id column="cid" property="cid"/>
+        <result column="created_user" property="created_user"/>
+        <result column="created_time" property="created_time"/>
+        <result column="modified_user" property="modified_user"/>
+        <result column="modified_time" property="modified_time"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="cid">
+        insert into t_cart (uid, pid, price, num,
+                            created_user, created_time, modified_user, modified_time)
+        values (#{uid}, #{pid}, #{price}, #{num},
+                #{created_user}, #{created_time}, #{modified_user}, #{modified_time})
+    </insert>
+    <update id="updateNumByCid">
+        update t_cart
+        set num           = #{num},
+            modified_user = #{modified_user},
+            modified_time = #{modified_time}
+        where cid = #{cid}
+    </update>
+    <select id="findByUidAndPid" resultMap="CartEntityMap">
+        select *
+        from t_cart
+        where uid = #{uid}
+          and pid = #{pid}
+    </select>
+
+</mapper>

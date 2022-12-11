@@ -11,3 +11,8 @@ spring:
 
 mybatis:
   mapper-locations: /mapper/*.xml
+
+# Spring读取配置文件中的数据：@Value("${user.address.max-count}")
+user:
+  address:
+    max-count: 20
